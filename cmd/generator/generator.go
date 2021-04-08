@@ -79,9 +79,7 @@ func (g *Generator) Generate() error {
 	}
 
 	for _, entry := range templateDirEntries {
-		e := entry
-		fmt.Println(e.Name())
-		err = copyAndReplace(e, dest, templateRoot, "", g.packageName)
+		err = copyAndReplace(entry, dest, templateRoot, "", g.packageName)
 		if err != nil {
 			fmt.Println("there was an error")
 			return err
