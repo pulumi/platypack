@@ -65,6 +65,8 @@ func (g *Generator) Generate() error {
 	switch g.language {
 	case Typescript:
 		templateDir = "typescript"
+	case Go:
+		templateDir = "go"
 	default:
 		return fmt.Errorf("unsupported language: %s", g.language)
 	}

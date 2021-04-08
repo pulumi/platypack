@@ -22,7 +22,7 @@ func newNewCommand() *cobra.Command {
 		`,
 		Run: func(cmd *cobra.Command, args []string) {
 			language := args[0]
-			supportedLanguages := []string{"typescript"}
+			supportedLanguages := []string{"typescript", "go"}
 			isSupported := false
 			for _, s := range supportedLanguages {
 				if s == language {
