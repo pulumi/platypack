@@ -133,42 +133,56 @@ For the Go SDK, dependencies are specified in the `sdk/go.mod` file.
 
 ### Implementation
 
-The implementation of this component is in `provider/cmd/pulumi-resource-xyz/staticPage.ts` and the structure of the component's inputs and outputs aligns with what is defined in `schema.json`:
+The implementation of this component is in `provider/cmd/pulumi-resource-xyz/components/staticPage.ts` and the structure of the component's inputs and outputs aligns with what is defined in `schema.json`:
 
 ```typescript
+const typeToken = "xyz:index:StaticPage";
+
 export interface StaticPageArgs {
     indexContent: pulumi.Input<string>;
 }
 
+@PulumiComponent(typeToken)
 export class StaticPage extends pulumi.ComponentResource {
+    @ComponentState
     public readonly bucket: aws.s3.Bucket;
+    @ComponentState
     public readonly websiteUrl: pulumi.Output<string>;
 
     constructor(name: string, args: StaticPageArgs, opts?: pulumi.ComponentResourceOptions) {
-        super("xyz:index:StaticPage", name, args, opts);
+        super(typeToken, name, args, opts);
 
         ...
     }
 }
 ```
 
-The provider makes this component resource available in the `construct` method in `provider/cmd/pulumi-resource-xyz/provider.ts`. When `construct` is called and the `type` argument is `xyz:index:StaticPage`, we create an instance of the `StaticPage` component resource and return its `URN` and outputs as its state.
+In `provider/cmd/pulumi-resource-xyz/index.ts` we add this component to the components array, so that the provider can use it for creation requests that correspond to its type token:
 
+```ts
+import { StaticPage } from "./components/staticPage";
+import { serve, IComponent } from "./utils/provider";
 
-```typescript
-async function constructStaticPage(name: string, inputs: pulumi.Inputs,
-    options: pulumi.ComponentResourceOptions): Promise<provider.ConstructResult> {
+// add additional components to this array.
+const components: IComponent[] = [ StaticPage ];
 
-    // Create the component resource.
-    const staticPage = new StaticPage(name, inputs as StaticPageArgs, options);
+// starts up the provider
+serve(components);
+```
 
-    // Return the component resource's URN and outputs as its state.
-    return {
-        urn: staticPage.urn,
-        state: {
-            bucket: staticPage.bucket,
-            websiteUrl: staticPage.websiteUrl,
-        },
-    };
+This `serve` utility relies on the `@PulumiComponent` and `@PulumiState` decorators for metadata needed to serve your component. You must add these decorators so that `serve` knows what type token corresponds to your component, and which component values should be captured and stored in the state file.
+
+```ts
+const typeToken = "xyz:index:StaticPage";
+
+export interface StaticPageArgs {
+    indexContent: pulumi.Input<string>;
 }
+
+@PulumiComponent(typeToken) // serve this component in response to requests for "xyz:index:StaticPage"
+export class StaticPage extends pulumi.ComponentResource {
+    @ComponentState // capture `bucket` in the state outputs of this component
+    public readonly bucket: aws.s3.Bucket;
+    @ComponentState // capture `websiteUrl` in the state outputs of this component
+    public readonly websiteUrl: pulumi.Output<string>;
 ```

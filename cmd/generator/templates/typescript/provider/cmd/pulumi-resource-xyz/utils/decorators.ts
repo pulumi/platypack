@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { StaticPage } from "./components/staticPage";
-import { serve, IComponent } from "./utils/provider";
+// @experimentalDecorators
+export function PulumiComponent(typeToken: string) {
+    return function (constructor: Function) {
+        constructor.prototype.__typeToken = typeToken;
+    }
+}
 
-// add additional components to this array.
-// make sure that components use the @PulumiComponent and @ComponentState decorators from "./utils/decorators"
-const components: IComponent[] = [ StaticPage ];
-
-// starts up the provider
-serve(components);
+// @experimentalDecorators
+export function ComponentState(target: any, propertyKey: string) {
+    if (!target.__state) {
+        target.__state = new Map();
+    }
+    target.__state.set(propertyKey, true);
+};

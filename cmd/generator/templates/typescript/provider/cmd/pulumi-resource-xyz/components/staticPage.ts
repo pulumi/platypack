@@ -14,6 +14,9 @@
 
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
+import { PulumiComponent, ComponentState } from "../utils/decorators";
+
+const typeToken = "xyz:index:StaticPage";
 
 export interface StaticPageArgs {
     /**
@@ -22,12 +25,17 @@ export interface StaticPageArgs {
     indexContent: pulumi.Input<string>;
 }
 
+// the @PulumiToken decorator must be applied to every component
+@PulumiComponent(typeToken)
 export class StaticPage extends pulumi.ComponentResource {
+    // the @ComponentState decorator must be added to properties that the component should maintain in the state file
+    @ComponentState
     public readonly bucket: aws.s3.Bucket;
+    @ComponentState
     public readonly websiteUrl: pulumi.Output<string>;
 
     constructor(name: string, args: StaticPageArgs, opts?: pulumi.ComponentResourceOptions) {
-        super("xyz:index:StaticPage", name, args, opts);
+        super(typeToken, name, args, opts);
 
         // Create a bucket and expose a website index document.
         const bucket = new aws.s3.Bucket(name, {
