@@ -23,6 +23,8 @@ export function PulumiComponent(typeToken: string) {
 export function ComponentState(target: any, propertyKey: string) {
     if (!target.__state) {
         target.__state = new Map();
+    } else if (!target.hasOwnProperty("__state")) {
+        target.__state = new Map(target.__state)
     }
     target.__state.set(propertyKey, true);
 };
