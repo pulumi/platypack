@@ -1,6 +1,6 @@
 # platypack
 
-A tool to generate (and eventually) manage Pulumi packages. Currently it supports generating scaffolding for packages authored in `go` and `typescript`. It sets up all the boilderplate needed to author a pulumi package in your languages of choice, and automatically generate SDKs in `typescript`, `go`, `python`, and `csharp`
+A tool to generate (and eventually) manage Pulumi packages. Currently it supports generating scaffolding for packages authored in `go`, `typescript`, and `python`. It sets up all the boilderplate needed to author a pulumi package in your languages of choice, and automatically generate SDKs in `typescript`, `go`, `python`, and `csharp`
 
 ## Usage
 
