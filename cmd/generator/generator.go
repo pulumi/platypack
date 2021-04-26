@@ -43,7 +43,7 @@ func NewGenerator(lang string, name string, dir string) (*Generator, error) {
 	case "csharp":
 		return nil, errors.New("csharp is not yet supported")
 	case "python":
-		return nil, errors.New("python is not yet supported")
+		l = Python
 	default:
 		return nil, errors.New(fmt.Sprintf("unknown language input: %s", lang))
 	}
@@ -67,6 +67,8 @@ func (g *Generator) Generate() error {
 		templateDir = "typescript"
 	case Go:
 		templateDir = "go"
+	case Python:
+		templateDir = "python"
 	default:
 		return fmt.Errorf("unsupported language: %s", g.language)
 	}

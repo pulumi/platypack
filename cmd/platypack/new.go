@@ -18,11 +18,11 @@ func newNewCommand() *cobra.Command {
 		Args:       cobra.ExactArgs(2),
 		Short:      "create a new pulumi package",
 		Long: `create a new pulumi package in the current directory
-		- supported languages: 'typescript'
+		- supported languages: 'typescript', 'go', 'python'
 		`,
 		Run: func(cmd *cobra.Command, args []string) {
 			language := args[0]
-			supportedLanguages := []string{"typescript", "go"}
+			supportedLanguages := []string{"typescript", "go", "python"}
 			isSupported := false
 			for _, s := range supportedLanguages {
 				if s == language {
