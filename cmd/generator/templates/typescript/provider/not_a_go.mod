@@ -1,9 +1,8 @@
 module github.com/pulumi/pulumi-xyz
 
-go 1.16
+go 1.15
 
 require (
 	github.com/pkg/errors v0.9.1
-	github.com/pulumi/pulumi/pkg/v2 v2.21.3-0.20210222163316-277dee6cc14d
-	github.com/pulumi/pulumi/sdk/v2 v2.21.3-0.20210222163316-277dee6cc14d // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.0.1-0.20210419234039-6a33b4b7ee41
 )
