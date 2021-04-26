@@ -38,7 +38,7 @@ two things are needed to run `pulumi up`:
 - Python 3.6+
 - Node.js
 - Yarn
-- Go 1.15
+- go 1.16
 - Node.js (to build the Node SDK)
 - .NET Code SDK (to build the .NET SDK)
 

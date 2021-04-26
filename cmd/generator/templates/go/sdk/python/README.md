@@ -14,7 +14,7 @@ Note that the generated provider plugin (`pulumi-resource-xyz`) must be on your 
 
 ## Prerequisites
 
-- Go 1.15
+- go 1.16
 - Pulumi CLI
 - Node.js (to build the Node.js SDK)
 - Yarn (to build the Node.js SDK)
