@@ -91,12 +91,41 @@ func (g *Generator) Generate() error {
 	return nil
 }
 
+type replacement struct {
+	src  string
+	dest string
+}
+
+// TODO - remove once go embed supports "all": https://github.com/golang/go/issues/43854
+// https://github.com/golang/go/issues/45197
+var replacements = []replacement{
+	{
+		src:  "not_a_go.mod",
+		dest: "go.mod",
+	},
+	{
+		src:  "not__init__.py",
+		dest: "__init__.py",
+	},
+	{
+		src:  "not__main__.py",
+		dest: "__main__.py",
+	},
+	{
+		src:  "not_utilities.py",
+		dest: "_utilities.py",
+	},
+}
+
 func copyAndReplace(entry os.DirEntry, destRoot, templateRoot, subpath, packageName string) error {
 	subpath = filepath.Join(subpath, entry.Name())
 	dest := filepath.Join(destRoot, subpath)
 	dest = strings.ReplaceAll(dest, "xyz", packageName)
-	// work around https://github.com/golang/go/issues/45197
-	dest = strings.ReplaceAll(dest, "not_a_go.mod", "go.mod")
+
+	for _, rep := range replacements {
+		dest = strings.ReplaceAll(dest, rep.src, rep.dest)
+	}
+
 	src := filepath.Join(templateRoot, subpath)
 
 	if entry.IsDir() {
