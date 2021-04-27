@@ -49,7 +49,7 @@ ${SRC}/${PACK}_provider/VERSION:
 # Go SDK
 
 gen_go_sdk::
-	rm -rf go
+	rm -rf sdk/go
 	cd provider/cmd/${CODEGEN} && go run . go ../../../sdk/go ${SCHEMA_PATH}
 
 
