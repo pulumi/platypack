@@ -57,10 +57,8 @@ func NewGenerator(lang string, name string, dir string) (*Generator, error) {
 
 func (g *Generator) Generate() error {
 	dest := filepath.Join(g.dir, g.packageName)
-	err := os.Mkdir(dest, 0755)
-	if err != nil {
-		return err
-	}
+	_ = os.Mkdir(dest, 0755)
+
 	var templateDir string
 	switch g.language {
 	case Typescript:
@@ -129,10 +127,8 @@ func copyAndReplace(entry os.DirEntry, destRoot, templateRoot, subpath, packageN
 	src := filepath.Join(templateRoot, subpath)
 
 	if entry.IsDir() {
-		err := os.Mkdir(dest, 0755)
-		if err != nil {
-			return err
-		}
+		_ = os.Mkdir(dest, 0755)
+
 		entries, err := templates.ReadDir(src)
 		if err != nil {
 			return err
