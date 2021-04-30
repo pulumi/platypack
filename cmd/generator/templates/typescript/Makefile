@@ -10,6 +10,10 @@ VERSION_PATH    := provider/pkg/version.Version
 WORKING_DIR     := $(shell pwd)
 SCHEMA_PATH     := ${WORKING_DIR}/schema.json
 
+PROVIDER_BIN   := ${WORKING_DIR}/bin
+PLUGIN_ROOT     := ~/.pulumi/plugins
+PLUGIN_LINK     := $(PLUGIN_ROOT)/resource-$(PACK)-v$(VERSION)
+
 generate:: gen_go_sdk gen_dotnet_sdk gen_nodejs_sdk gen_python_sdk
 
 build:: build_provider build_dotnet_sdk build_nodejs_sdk build_python_sdk
@@ -34,6 +38,7 @@ install_provider:: build_provider
 	cd provider/cmd/${PROVIDER}/ && cp ${PROVIDER} ${PROVIDER}.cmd PulumiPlugin.yaml ../../../bin/
 	cd bin && yarn install
 	chmod +x bin/${PROVIDER}
+	cp -r ${PROVIDER_BIN} ${PLUGIN_LINK}
 
 
 # Go SDK
