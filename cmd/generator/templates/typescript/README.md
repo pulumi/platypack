@@ -16,12 +16,12 @@ If creating a provider for distribution to other users, they will need `pulumi-r
 
 ## Prerequisites
 
-- Pulumi CLI
-- Node.js
-- Yarn
-- go 1.16 (to regenerate the SDKs)
-- Python 3.6+ (to build the Python SDK)
-- .NET Core SDK (to build the .NET SDK)
+-   Pulumi CLI
+-   Node.js
+-   Yarn
+-   go 1.16 (to regenerate the SDKs)
+-   Python 3.6+ (to build the Python SDK)
+-   .NET Core SDK (to build the .NET SDK)
 
 ## Build and Test
 
@@ -31,9 +31,6 @@ make install_provider
 
 # Regenerate SDKs
 make generate
-
-# Ensure the pulumi-provider-xyz script is on PATH
-$ export PATH=$PATH:$PWD/bin
 
 # Test Node.js SDK
 $ make install_nodejs_sdk
@@ -164,7 +161,7 @@ import { StaticPage } from "./components/staticPage";
 import { serve, IComponent } from "./utils/provider";
 
 // add additional components to this array.
-const components: IComponent[] = [ StaticPage ];
+const components: IComponent[] = [StaticPage];
 
 // starts up the provider
 serve(components);
