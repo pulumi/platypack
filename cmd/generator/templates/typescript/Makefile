@@ -38,6 +38,7 @@ install_provider:: build_provider
 	cd provider/cmd/${PROVIDER}/ && cp ${PROVIDER} ${PROVIDER}.cmd PulumiPlugin.yaml ../../../bin/
 	cd bin && yarn install
 	chmod +x bin/${PROVIDER}
+	mkdir -p ${PLUGIN_LINK} && rm -rf ${PLUGIN_LINK}
 	cp -r ${PROVIDER_BIN} ${PLUGIN_LINK}
 
 
